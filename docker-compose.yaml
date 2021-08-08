@@ -1,19 +1,20 @@
 version: '3'
 services:
   selenoid:
-    image: "aerokube/selenoid"
+    image: "aerokube/selenoid:latest-release"
     network_mode: bridge
     ports:
       - "4444:4444"
     volumes:
-      - ./selenoid/config:/etc/selenoid
-      - ./build:/output
-      - ./var/run/docker.sock:/var/run/docker.sock
-      - ./build:/opt/selenoid/video
+      - ./selenoid/config:/etc/selenoid/
+      - ./build/output:/output
+      - //var/run/docker.sock:/var/run/docker.sock
+      - ./build/video:/opt/selenoid/video
     environment:
-      - OVERRIDE_VIDEO_OUTPUT_DIR=./target
+      - OVERRIDE_VIDEO_OUTPUT_DIR=./build/video
+    command: ["-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video"]
   selenoid-ui:
-    image: "aerokube/selenoid-ui"
+    image: "aerokube/selenoid-ui:latest-release"
     network_mode: bridge
     links:
       - selenoid
@@ -23,6 +24,11 @@ services:
   tests:
     build: .
     network_mode: bridge
+    volumes:
+    - ./build:/home/gradle/src/build
     links:
       - selenoid
       - selenoid-ui
+    ports:
+      - "5432:5432"
+    command: /bin/sh -c "gradle test"

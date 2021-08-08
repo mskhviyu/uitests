@@ -31,7 +31,8 @@ dependencies {
 
 test {
     useTestNG {
-        suites "src/test/resources/com.example.uitests/testng.xml"
+        suites "src/test/resources/uitests/testng.xml"
+        test.outputs.upToDateWhen {false}
     }
 }
 allure {

@@ -21,7 +21,7 @@ public class BaseTest {
 		Configuration.remote = "http://" + seleniumGridHubHostname + ":4444/wd/hub";
 		Configuration.baseUrl = url;
 		Configuration.browser = browser;
-		Configuration.browserVersion = "90.0";
+		Configuration.browserVersion = "91.0";
 		DesiredCapabilities dc = new DesiredCapabilities();
 		dc.setCapability("enableVNC", true);
 		Configuration.browserCapabilities = dc;
