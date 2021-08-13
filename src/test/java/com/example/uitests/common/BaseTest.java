@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.*;
 
+import static com.codeborne.selenide.Selenide.open;
+
 
 public class BaseTest {
 
@@ -26,14 +28,12 @@ public class BaseTest {
 		dc.setCapability("enableVNC", true);
 		Configuration.browserCapabilities = dc;
 
-//		Driver.setDriver(browser);
 		LOG.info("Open url - " + url);
-//		open(url);
+		open(url);
 	}	
 
 	@AfterMethod(alwaysRun = true)
 	public void tearDown() {
 		Selenide.closeWebDriver();
-//		WebDriverRunner.getWebDriver().quit();
 	}
 }
